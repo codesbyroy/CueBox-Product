@@ -168,7 +168,7 @@ const SupportForm: React.FC<SupportFormProps> = ({ isOpen, onClose }) => {
                 onClick={(e) => e.stopPropagation()}
             >
                 <motion.div
-                    className="absolute -top-16 left-0 right-0 mx-auto w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg"
+                    className="absolute -top-12 left-0 right-0 mx-auto w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.2 }}
