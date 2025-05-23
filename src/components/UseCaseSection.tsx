@@ -39,9 +39,19 @@ const UseCase: React.FC<UseCaseProps> = ({
         // Animated card container with hover effects
         <motion.div
             className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-all flex flex-col items-center text-center overflow-hidden"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay }}
+            initial={isMobile 
+                ? { opacity: 0, scale: 0.92, x: 0 } 
+                : { opacity: 0, y: 20 }
+            }
+            whileInView={isMobile 
+                ? { opacity: 1, scale: 1, x: 0 } 
+                : { opacity: 1, y: 0 }
+            }
+            transition={{ 
+                duration: isMobile ? 0.4 : 0.5, 
+                ease: "easeOut", 
+                delay: isMobile ? delay * 0.8 : delay 
+            }}
             viewport={{ once: true, margin: "-50px" }}
         >
             {/* Icon container with gradient background */}
@@ -79,22 +89,22 @@ const UseCase: React.FC<UseCaseProps> = ({
                                 {showExamples && (
                                     <motion.div 
                                         className="space-y-3 mt-3"
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: 10 }}
-                                        transition={{ duration: 0.4 }}
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: "auto" }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        transition={{ duration: 0.3, ease: "easeInOut" }}
                                     >
                                         {examples.map((example, index) => (
                                             <motion.div
                                                 key={index}
                                                 className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300 text-left border-l-2 border-indigo-300 dark:border-indigo-700"
-                                                initial={{ opacity: 0, y: 20 }}
-                                                animate={{ opacity: 1, y: 0 }}
+                                                initial={{ opacity: 0, scale: 0.95 }}
+                                                animate={{ opacity: 1, scale: 1 }}
                                                 transition={{
-                                                    duration: 0.4,
-                                                    delay: 0.1 * (index + 1),
+                                                    duration: 0.3,
+                                                    delay: 0.05 * (index + 1),
                                                 }}
-                                                exit={{ opacity: 0, y: 10 }}
+                                                exit={{ opacity: 0, scale: 0.95 }}
                                             >
                                                 {example}
                                             </motion.div>
@@ -180,9 +190,19 @@ const UseCaseSection: React.FC = () => {
                 {/* Grid of use case cards with staggered animations */}
                 <motion.div 
                     className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ staggerChildren: 0.1 }}
+                    initial={isMobile 
+                        ? { opacity: 0, scale: 0.9 } 
+                        : { opacity: 0 }
+                    }
+                    whileInView={isMobile 
+                        ? { opacity: 1, scale: 1 } 
+                        : { opacity: 1 }
+                    }
+                    transition={{ 
+                        staggerChildren: 0.1,
+                        duration: isMobile ? 0.4 : 0.3,
+                        ease: isMobile ? "easeOut" : "easeInOut"
+                    }}
                     viewport={{ once: true, margin: "-100px" }}
                 >
                     {useCaseContent.useCases.map((useCase, index) => (
