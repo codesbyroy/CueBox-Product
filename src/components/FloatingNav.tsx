@@ -3,6 +3,7 @@ import { useState, memo } from "react";
 import { useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import SupportForm from "./SupportForm";
+import { ctaContent } from "../content";
 
 // Animation variants for nav container
 const navVariants = {
@@ -65,7 +66,7 @@ const FloatingNav = memo(() => {
                     
                     {/* Extension download link */}
                     <a
-                        href="https://chromewebstore.google.com/detail/flihmekgclecklblbnocoagjdapgeakm"
+                        href={ctaContent.buttonLink}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-white hover:text-yellow-200 transition-colors text-sm"

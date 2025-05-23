@@ -77,7 +77,7 @@ The site is automatically deployed through our CI/CD pipeline when changes are p
 
 ## Chrome Extension
 
-The CueBox Chrome Extension can be found in the [Chrome Web Store](https://chromewebstore.google.com/detail/flihmekgclecklblbnocoagjdapgeakm).
+The CueBox Chrome Extension can be found in the [Chrome Web Store](https://chromewebstore.google.com/detail/cuebox/fikfjggnngknmhkopeobckdmpmledfhg).
 
 ## Contact
 

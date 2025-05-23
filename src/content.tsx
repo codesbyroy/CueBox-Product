@@ -190,7 +190,7 @@ export const ctaContent = {
         "Try CueBox today and never lose your valuable AI prompts again. Save, reuse, and optimize your interactions across all your favorite AI platforms.",
     buttonText: "Download CueBox",
     buttonLink:
-        "https://chromewebstore.google.com/detail/flihmekgclecklblbnocoagjdapgeakm",
+        "https://chromewebstore.google.com/detail/cuebox/fikfjggnngknmhkopeobckdmpmledfhg",
 };
 
 // Footer content configuration
