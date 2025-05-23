@@ -14,10 +14,19 @@ interface FeatureItemProps {
     bulletPoints?: string[];
 }
 
-// Animation variants for better reusability and performance
+// Enhanced animation variants for better reusability and performance
 const containerVariants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0 },
+    visible: { 
+        opacity: 1, 
+        y: 0,
+        transition: {
+            type: "spring",
+            damping: 25,
+            stiffness: 100,
+            when: "beforeChildren",
+        }
+    },
 };
 
 // Animated bullet point sub-component
@@ -85,10 +94,10 @@ const FeatureItem: React.FC<FeatureItemProps> = ({
 
     // Track when component is in viewport for animations
     const ref = useRef(null);
-    const isInView = useInView(ref, { once: false, amount: 0.3 });
+    const isInView = useInView(ref, { once: true, amount: 0.2 });
 
     return (
-        <div className="py-16" ref={ref}>
+        <div className="py-10" ref={ref}>
             <motion.div
                 className={cn(
                     "container mx-auto px-4 flex flex-col gap-10 items-center",

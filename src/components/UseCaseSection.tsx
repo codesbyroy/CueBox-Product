@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
     FaLaptopCode,
     FaGraduationCap,
@@ -7,9 +7,12 @@ import {
     FaFlask,
     FaPencilAlt,
     FaLanguage,
+    FaChevronCircleDown,
+    FaChevronCircleUp,
 } from "react-icons/fa";
 import AnimatedText from "./AnimatedText";
 import { useCaseContent } from "@/content";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Props interface for individual use case cards
 interface UseCaseProps {
@@ -18,6 +21,7 @@ interface UseCaseProps {
     description: string;
     examples: string[];
     delay: number;
+    isMobile: boolean;
 }
 
 // Individual use case card component with animations
@@ -27,16 +31,18 @@ const UseCase: React.FC<UseCaseProps> = ({
     description,
     examples,
     delay,
+    isMobile,
 }) => {
+    const [showExamples, setShowExamples] = useState(false);
+    
     return (
         // Animated card container with hover effects
         <motion.div
             className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-all flex flex-col items-center text-center overflow-hidden"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay }}
-            viewport={{ once: true }}
-            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+            transition={{ duration: 0.5, ease: "easeOut", delay }}
+            viewport={{ once: true, margin: "-50px" }}
         >
             {/* Icon container with gradient background */}
             <div className="w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center mb-4 relative">
@@ -53,26 +59,72 @@ const UseCase: React.FC<UseCaseProps> = ({
             
             {/* Example prompts with staggered animations */}
             <div className="w-full space-y-3 mt-2">
-                <div className="h-px w-1/3 mx-auto bg-gradient-to-r from-transparent via-indigo-300 dark:via-indigo-700 to-transparent mb-4"></div>
-                {examples.map((example, index) => (
-                    <motion.div
-                        key={index}
-                        className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300 text-left border-l-2 border-indigo-300 dark:border-indigo-700"
-                        initial={{ opacity: 0, x: index % 2 === 0 ? -10 : 10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{
-                            duration: 0.3,
-                            delay: 0.1 + index * 0.05,
-                        }}
-                        viewport={{ once: true }}
-                        whileHover={{
-                            borderLeftWidth: "4px",
-                            transition: { duration: 0.15 },
-                        }}
+                <div className="relative flex items-center justify-center mb-4">
+                    <div className="h-px w-1/3 mx-auto bg-gradient-to-r from-transparent via-indigo-300 dark:via-indigo-700 to-transparent"></div>
+                    <button 
+                        onClick={() => setShowExamples(!showExamples)}
+                        className="absolute bg-white dark:bg-gray-800 p-1 rounded-full text-indigo-500 dark:text-indigo-300 text-lg cursor-pointer hover:scale-110 transition-transform"
+                        aria-label={showExamples ? "Hide Examples" : "Show Examples"}
                     >
-                        {example}
-                    </motion.div>
-                ))}
+                        {showExamples ? <FaChevronCircleUp /> : <FaChevronCircleDown />}
+                    </button>
+                </div>
+                
+                {isMobile ? (
+                    <>
+                        
+                        <AnimatePresence>
+                            {showExamples && (
+                                <motion.div 
+                                    className="space-y-3 mt-3"
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: "auto" }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                                >
+                                    {examples.map((example, index) => (
+                                        <motion.div
+                                            key={index}
+                                            className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300 text-left border-l-2 border-indigo-300 dark:border-indigo-700"
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{
+                                                duration: 0.3,
+                                                delay: 0.05 * index,
+                                            }}
+                                            exit={{ opacity: 0, y: 5 }}
+                                        >
+                                            {example}
+                                        </motion.div>
+                                    ))}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </>
+                ) : (
+                    <>
+                        {examples.map((example, index) => (
+                            <motion.div
+                                key={index}
+                                className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300 text-left border-l-2 border-indigo-300 dark:border-indigo-700"
+                                initial={{ opacity: 0, x: index % 2 === 0 ? -10 : 10 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{
+                                    duration: 0.15,
+                                    ease: "easeOut",
+                                    delay: 0.1 + index * 0.05,
+                                }}
+                                viewport={{ once: true }}
+                                whileHover={{
+                                    borderLeftWidth: "5px",
+                                    transition: { duration: 0.2 },
+                                }}
+                            >
+                                {example}
+                            </motion.div>
+                        ))}
+                    </>
+                )}
             </div>
         </motion.div>
     );
@@ -98,9 +150,12 @@ const UseCaseSection: React.FC = () => {
                 return <FaLaptopCode />;
         }
     };
+    
+    // Use the existing mobile hook
+    const isMobile = useIsMobile();
 
     return (
-        <section className="py-16 bg-gray-50 dark:bg-gray-900">
+        <section className="py-16 bg-gray-50 dark:bg-gray-900 mt-8">
             <div className="container mx-auto px-4">
                 {/* Section header with animated title */}
                 <div className="text-center mb-12">
@@ -112,15 +167,21 @@ const UseCaseSection: React.FC = () => {
                         className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mt-4"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4 }}
-                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, ease: "easeOut" }}
+                        viewport={{ once: true, margin: "-50px" }}
                     >
                         {useCaseContent.description}
                     </motion.p>
                 </div>
 
-                {/* Grid of use case cards with delayed animations */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                {/* Grid of use case cards with staggered animations */}
+                <motion.div 
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ staggerChildren: 0.1 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                >
                     {useCaseContent.useCases.map((useCase, index) => (
                         <UseCase
                             key={index}
@@ -128,10 +189,11 @@ const UseCaseSection: React.FC = () => {
                             title={useCase.title}
                             description={useCase.description}
                             examples={useCase.examples}
-                            delay={0.05 + index * 0.05}
+                            delay={0.05 + index * 0.07}
+                            isMobile={isMobile}
                         />
                     ))}
-                </div>
+                </motion.div>
             </div>
         </section>
     );

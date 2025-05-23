@@ -28,7 +28,7 @@ const wordVariants = {
         y: 0,
         transition: {
             type: "spring",
-            damping: 12,
+            damping: 18,
             stiffness: 100,
         },
     },
