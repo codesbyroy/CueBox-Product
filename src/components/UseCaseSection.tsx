@@ -61,45 +61,48 @@ const UseCase: React.FC<UseCaseProps> = ({
             <div className="w-full space-y-3 mt-2">
                 <div className="relative flex items-center justify-center mb-4">
                     <div className="h-px w-1/3 mx-auto bg-gradient-to-r from-transparent via-indigo-300 dark:via-indigo-700 to-transparent"></div>
-                    <button 
-                        onClick={() => setShowExamples(!showExamples)}
-                        className="absolute bg-white dark:bg-gray-800 p-1 rounded-full text-indigo-500 dark:text-indigo-300 text-lg cursor-pointer hover:scale-110 transition-transform"
-                        aria-label={showExamples ? "Hide Examples" : "Show Examples"}
-                    >
-                        {showExamples ? <FaChevronCircleUp /> : <FaChevronCircleDown />}
-                    </button>
+                    {isMobile && (
+                        <button 
+                            onClick={() => setShowExamples(!showExamples)}
+                            className="absolute bg-white dark:bg-gray-800 p-1 rounded-full text-indigo-500 dark:text-indigo-300 text-lg cursor-pointer hover:scale-110 transition-transform"
+                            aria-label={showExamples ? "Hide Examples" : "Show Examples"}
+                        >
+                            {showExamples ? <FaChevronCircleUp /> : <FaChevronCircleDown />}
+                        </button>
+                    )}
                 </div>
                 
                 {isMobile ? (
-                    <>
-                        
-                        <AnimatePresence>
-                            {showExamples && (
-                                <motion.div 
-                                    className="space-y-3 mt-3"
-                                    initial={{ opacity: 0, height: 0 }}
-                                    animate={{ opacity: 1, height: "auto" }}
-                                    exit={{ opacity: 0, height: 0 }}
-                                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                                >
-                                    {examples.map((example, index) => (
-                                        <motion.div
-                                            key={index}
-                                            className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300 text-left border-l-2 border-indigo-300 dark:border-indigo-700"
-                                            initial={{ opacity: 0, y: 10 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{
-                                                duration: 0.3,
-                                                delay: 0.05 * index,
-                                            }}
-                                            exit={{ opacity: 0, y: 5 }}
-                                        >
-                                            {example}
-                                        </motion.div>
-                                    ))}
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+                    <> 
+                        <div className="overflow-hidden">
+                            <AnimatePresence>
+                                {showExamples && (
+                                    <motion.div 
+                                        className="space-y-3 mt-3"
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: 10 }}
+                                        transition={{ duration: 0.4 }}
+                                    >
+                                        {examples.map((example, index) => (
+                                            <motion.div
+                                                key={index}
+                                                className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300 text-left border-l-2 border-indigo-300 dark:border-indigo-700"
+                                                initial={{ opacity: 0, y: 20 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{
+                                                    duration: 0.4,
+                                                    delay: 0.1 * (index + 1),
+                                                }}
+                                                exit={{ opacity: 0, y: 10 }}
+                                            >
+                                                {example}
+                                            </motion.div>
+                                        ))}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
                     </>
                 ) : (
                     <>
