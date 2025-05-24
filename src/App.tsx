@@ -15,8 +15,9 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import FloatingNav from "./components/FloatingNav";
 
-// Lazy load Privacy page to reduce initial bundle size
+// Lazy load pages to reduce initial bundle size
 const Privacy = lazy(() => import("./pages/Privacy"));
+const Support = lazy(() => import("./pages/Support"));
 
 // Configure global query client with optimized settings
 const queryClient = new QueryClient({
@@ -69,6 +70,14 @@ const App = memo(() => {
                                 element={
                                     <Suspense fallback={<LoadingFallback />}>
                                         <Privacy />
+                                    </Suspense>
+                                }
+                            />
+                            <Route
+                                path="/support"
+                                element={
+                                    <Suspense fallback={<LoadingFallback />}>
+                                        <Support />
                                     </Suspense>
                                 }
                             />
