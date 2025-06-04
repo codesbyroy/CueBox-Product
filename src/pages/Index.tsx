@@ -20,7 +20,7 @@ const Index = () => {
 
             <main>
                 {/* Hero section with animated title and description */}
-                <section className="py-16 bg-white dark:bg-gray-900">
+                <section className="py-12 bg-white dark:bg-gray-900">
                     <div className="container mx-auto px-4 text-center">
                         <AnimatedText
                             text={heroContent.title}
@@ -35,6 +35,19 @@ const Index = () => {
                         >
                             {heroContent.description}
                         </motion.p>
+                        <div className="mt-8">
+                            <iframe 
+                                width="560" 
+                                height="315" 
+                                src="https://www.youtube.com/embed/v2T51B1nBAk?si=x5CnSRDMlmnrvprM" 
+                                title="YouTube video player" 
+                                frameBorder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                referrerPolicy="strict-origin-when-cross-origin" 
+                                allowFullScreen
+                                className="mx-auto shadow-lg rounded-lg"
+                            ></iframe>
+                        </div>
                     </div>
                 </section>
 
