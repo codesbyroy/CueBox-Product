@@ -35,18 +35,18 @@ const Index = () => {
                         >
                             {heroContent.description}
                         </motion.p>
-                        <div className="mt-8">
-                            <iframe 
-                                width="560" 
-                                height="315" 
-                                src="https://www.youtube.com/embed/v2T51B1nBAk?si=x5CnSRDMlmnrvprM" 
-                                title="YouTube video player" 
-                                frameBorder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                referrerPolicy="strict-origin-when-cross-origin" 
-                                allowFullScreen
-                                className="mx-auto shadow-lg rounded-lg"
-                            ></iframe>
+                        <div className="mt-8 max-w-xl mx-auto">
+                            <div className="relative pt-[56.25%] w-full">
+                                <iframe 
+                                    src="https://www.youtube.com/embed/v2T51B1nBAk?si=x5CnSRDMlmnrvprM" 
+                                    title="YouTube video player" 
+                                    frameBorder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    referrerPolicy="strict-origin-when-cross-origin" 
+                                    allowFullScreen
+                                    className="absolute top-0 left-0 w-full h-full shadow-lg rounded-lg"
+                                ></iframe>
+                            </div>
                         </div>
                     </div>
                 </section>
